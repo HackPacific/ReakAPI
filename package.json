@@ -1,0 +1,22 @@
+{
+  "name": "reak-api",
+  "version": "0.0.1",
+  "description": "An API for Reak",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackPacific/ReakAPI.git"
+  },
+  "keywords": [
+    "Reak"
+  ],
+  "author": "Harry Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HackPacific/ReakAPI/issues"
+  },
+  "homepage": "https://github.com/HackPacific/ReakAPI#readme"
+}
