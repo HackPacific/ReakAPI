@@ -7,6 +7,10 @@ var Message = require('./models/message');
 
 app.get('/messages', function(req, res) {
   Message.find({}, function(err, messages) {
+    messages = messages.map(function(item){
+      return item.content;
+    });
+
     res.send(messages);
   });
 });
