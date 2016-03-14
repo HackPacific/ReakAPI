@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/HackPacific/ReakAPI/issues"
   },
-  "homepage": "https://github.com/HackPacific/ReakAPI#readme"
+  "homepage": "https://github.com/HackPacific/ReakAPI#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7"
+  }
 }
