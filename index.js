@@ -1,4 +1,5 @@
 require('dotenv').config({silent: true});
+require('newrelic');
 
 var express = require('express');
 var app = express();
@@ -28,13 +29,20 @@ var pusher = new Pusher({
 });
 
 app.get('/messages', function(req, res) {
-  Message.find({}, function(err, messages) {
-    messages = messages.map(function(item){
-      return item.content;
-    });
+  request('https://graph.facebook.com/debug_token?input_token=' + req.query.token + '&access_token=' + process.env.FB_APP_TOKEN, function (error, response, body) {
+    if (JSON.parse(body).data.is_valid) {
+      Message.find({}, function(err, messages) {
+        messages = messages.map(function(item){
+          return item.content;
+        });
 
-    res.send(messages);
-  });
+        res.send(messages);
+      });
+    } else {
+      res.send({ authorized: false });
+    }
+  })
+
 });
 
 app.post('/messages', function(req, res) {
