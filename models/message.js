@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var messageSchema = new Schema({
-  author    : ObjectId,
+  sender    : ObjectId,
+  receiver  : ObjectId,
   content   : String,
   date      : Date
 });
