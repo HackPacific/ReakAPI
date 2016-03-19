@@ -3,9 +3,12 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var userSchema = new Schema({
-  author           : ObjectId,
-  name             : String,
-  facebookUserId   : String,
+  id               : ObjectId,
+  first_name       : String,
+  last_name        : String,
+  email            : String,
+  fb_user_id       : String,
+  fb_expires_at    : Number,
   date             : Date
 });
 
