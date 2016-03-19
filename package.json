@@ -1,7 +1,7 @@
 {
-  "name": "reak-api",
+  "name": "threetwoone-api",
   "version": "0.0.1",
-  "description": "An API for Reak",
+  "description": "An API for ThreeTwoOneApp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,17 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HackPacific/ReakAPI.git"
+    "url": "git+https://github.com/HackPacific/ThreeTwoOneAPI.git"
   },
   "keywords": [
-    "Reak"
   ],
   "author": "Harry Chen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HackPacific/ReakAPI/issues"
+    "url": "https://github.com/HackPacific/ThreeTwoOneAPI/issues"
   },
-  "homepage": "https://github.com/HackPacific/ReakAPI#readme",
+  "homepage": "https://github.com/HackPacific/ThreeTwoOneAPI#readme",
   "dependencies": {
     "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",

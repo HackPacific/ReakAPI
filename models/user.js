@@ -3,10 +3,10 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var userSchema = new Schema({
-  author    : ObjectId,
-  name      : String,
+  author           : ObjectId,
+  name             : String,
   facebookUserId   : String,
-  date      : Date
+  date             : Date
 });
 
 module.exports = mongoose.model('User', userSchema);
