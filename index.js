@@ -1,8 +1,10 @@
 // Load Environment variables
 require('dotenv').config({silent: true});
 
-// Load performance tracker with New Relic
-require('newrelic');
+// Load performance tracker with New Relic on production
+if (process.env.EXPRESS_ENV != 'development') {
+  require('newrelic');
+}
 
 // Initial application in express.js
 var express = require('express');
@@ -12,11 +14,8 @@ var app = express();
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI);
 
-var Message = require('./models/message');
-
-var Schema = {
-  Message: Message
-}
+// Load Database Model Schema
+var Model = require('./models/index')();
 
 // Load Request Parser
 var bodyParser = require('body-parser')
@@ -46,7 +45,7 @@ var Lib = {
 }
 
 // Load all API routes
-require('./routes/api/v1/index')(app, Schema, Lib);
+require('./routes/api/v1/index')(app, Model, Lib);
 
 // Start Web Server
 app.listen(app.get('port'), function() {

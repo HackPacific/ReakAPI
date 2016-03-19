@@ -1,9 +1,9 @@
-module.exports = function(app, Schema, Lib) {
+module.exports = function(app, Model, Lib) {
   app.post('/messages', function(req, res) {
-    var message = new Schema.Message({content: req.body.content});
+    var message = new Model.Message({content: req.body.content});
     message.save(function(err, message) {
 
-      Schema.Message.find({}, function(err, messages) {
+      Model.Message.find({}, function(err, messages) {
         messages = messages.map(function(item){
           return item.content;
         });
