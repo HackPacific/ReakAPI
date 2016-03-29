@@ -18,6 +18,10 @@ module.exports = function(app, Model, Lib) {
       }
     })
     .then(function(existingUser) {
+      if (existingUser.length != 0) {
+        throw new Error('User already exists');
+      }
+
       return Lib.Request(user_info_url)
     })
     .then(function(resp) {
@@ -27,14 +31,19 @@ module.exports = function(app, Model, Lib) {
         fb_user_id: fbUser.id,
         first_name: fbUser.first_name,
         last_name: fbUser.last_name,
-        email: fbUser.email,
-        fb_expires_at: fbUserToken.expires_at
+        email: fbUser.email
+        // fb_expires_at: fbUserToken.expires_at
       });
 
       return user.save()
     })
     .then(function(user) {
       res.send({ data: user, success: true, status: 201 });
+    })
+    .catch(function(err) {
+      if (err.message === 'User already exists') {
+        res.send({ message: 'User already exists', success: false, status: 400 });
+      }
     })
     .done();
 
