@@ -41,7 +41,8 @@ var pusher = new Pusher({
 // Load all Libraries
 var Lib = {
   Pusher: pusher,
-  Request: require('request')
+  Request: require('request-promise'),
+  Q: require('q')
 }
 
 // Load all API routes
