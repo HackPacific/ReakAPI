@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var sessionSchema = new Schema({
-  user             : ObjectId,
+  user_id          : ObjectId,
   token            : String,
   date             : Date
 });

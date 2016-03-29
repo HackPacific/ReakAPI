@@ -1,4 +1,6 @@
 module.exports = function(app, Model, Lib) {
+  var randomstring = require("randomstring");
+
   app.post('/users', function(req, res) {
 
     var auth_check_url = 'https://graph.facebook.com/debug_token?input_token=' + req.body.fb_access_token + '&access_token=' + process.env.FB_APP_TOKEN;
@@ -24,7 +26,7 @@ module.exports = function(app, Model, Lib) {
         throw new Error('User already exists');
       }
 
-      return [fbUserToken, Lib.Request(user_info_url)]
+      return [fbUserToken, Lib.Request(user_info_url)];
     })
     .spread(function(fbUserToken, resp) {
       var fbUser = JSON.parse(resp);
@@ -37,15 +39,23 @@ module.exports = function(app, Model, Lib) {
         fb_expires_at: fbUserToken.expires_at
       });
 
-      return user.save()
+      return user.save();
     })
+    // Log in newly created user
     .then(function(user) {
-      res.send({ data: user, success: true, status: 201 });
+      var session = new Model.Session({
+        token: randomstring.generate(),
+        user_id: user._id
+      });
+
+      return [user, session.save()];
+    })
+    .spread(function(user, session) {
+      res.send({ data: {user: user, session: session }, success: true });
     })
     .catch(function(err) {
-      res.send({ message: err.message, success: false, status: 400 });
-    })
-    .done();
+      res.send({ message: err.message, success: false });
+    });
 
   });
 }
