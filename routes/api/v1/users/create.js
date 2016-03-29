@@ -5,34 +5,36 @@ module.exports = function(app, Model, Lib) {
 
     var user_info_url = 'https://graph.facebook.com/me?fields=email,first_name,last_name&access_token=' + req.body.fb_access_token;
 
-    // Check user's FB Oauth Token validations
     Lib.Request(auth_check_url)
     .then(function(resp) {
       var fbUserToken = JSON.parse(resp).data;
       return fbUserToken;
     })
-    // Check if the user already exists in db
+    // Check user's FB Oauth Token validations
     .then(function(fbUserToken) {
       if (fbUserToken.is_valid) {
-        return Model.User.find({ fb_user_id: fbUserToken.user_id });
+        return [fbUserToken, Model.User.find({ fb_user_id: fbUserToken.user_id })];
+      } else {
+        throw new Error('FB User Token Invalid');
       }
     })
-    .then(function(existingUser) {
+    // Check if the user already exists in db
+    .spread(function(fbUserToken, existingUser) {
       if (existingUser.length != 0) {
         throw new Error('User already exists');
       }
 
-      return Lib.Request(user_info_url)
+      return [fbUserToken, Lib.Request(user_info_url)]
     })
-    .then(function(resp) {
+    .spread(function(fbUserToken, resp) {
       var fbUser = JSON.parse(resp);
 
       var user = new Model.User({
         fb_user_id: fbUser.id,
         first_name: fbUser.first_name,
         last_name: fbUser.last_name,
-        email: fbUser.email
-        // fb_expires_at: fbUserToken.expires_at
+        email: fbUser.email,
+        fb_expires_at: fbUserToken.expires_at
       });
 
       return user.save()
@@ -41,9 +43,7 @@ module.exports = function(app, Model, Lib) {
       res.send({ data: user, success: true, status: 201 });
     })
     .catch(function(err) {
-      if (err.message === 'User already exists') {
-        res.send({ message: 'User already exists', success: false, status: 400 });
-      }
+      res.send({ message: err.message, success: false, status: 400 });
     })
     .done();
 
