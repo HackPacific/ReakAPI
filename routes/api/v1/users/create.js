@@ -17,7 +17,7 @@ module.exports = function(app, Model, Lib) {
       if (fbUserToken.is_valid) {
         return [fbUserToken, Model.User.find({ fb_user_id: fbUserToken.user_id })];
       } else {
-        throw new Error('FB User Token Invalid');
+        throw new Error('Not authenticated');
       }
     })
     // Check if the user already exists in db
