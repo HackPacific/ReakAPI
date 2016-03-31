@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['3210'],
+  app_name: ['321'],
   /**
    * Your New Relic license key.
    */

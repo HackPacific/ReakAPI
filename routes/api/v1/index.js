@@ -9,6 +9,9 @@ module.exports = function(app, Schema, Lib) {
   // Sessions
   require('./sessions/create')(app, Schema, Lib);
 
+  // Friends
+  require('./friends/index')(app, Schema, Lib);
+
   // Others
   require('./others/loaderio-04a20ca317ade1f424e601e7424811a3')(app, Schema, Lib);
 }
