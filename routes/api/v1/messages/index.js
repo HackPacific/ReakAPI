@@ -7,10 +7,10 @@ module.exports = function(app, Model, Lib) {
             return item.content;
           });
 
-          res.send(messages);
+          res.status(200).send(messages);
         });
       } else {
-        res.send({ authorized: false });
+        res.status(401).send({ authorized: false });
       }
     })
 

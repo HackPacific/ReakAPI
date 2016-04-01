@@ -33,10 +33,10 @@ module.exports = function(app, Model, Lib) {
       }
     })
     .then(function(session) {
-      res.send({ data: { session: session }, success: true });
+      res.status(201).send({ data: { session: session }, success: true });
     })
     .catch(function(err) {
-      res.send({ message: err.message, success: false });
+      res.status(401).send({ message: err.message, success: false });
     });
 
   });
